@@ -1,0 +1,30 @@
+name: AWS OIDC Identity Verification
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-oidc:
+    name: Verify temporary AWS identity through OIDC
+    runs-on: ubuntu-latest
+    environment: production
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Configure temporary AWS credentials through OIDC
+        uses: aws-actions/configure-aws-credentials@v6.1.0
+        with:
+          role-to-assume: ${{ vars.AWS_OIDC_ROLE_ARN }}
+          aws-region: ca-central-1
+
+      - name: Prove temporary AWS identity
+        run: aws sts get-caller-identity
+
+      - name: Confirm verification scope
+        run: |
+          echo "OIDC identity verification completed."
+          echo "No Terraform plan/apply or AWS resource deployment was performed."

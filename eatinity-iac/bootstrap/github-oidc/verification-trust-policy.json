@@ -10,7 +10,7 @@
       "Condition": {
         "StringEquals": {
           "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
-          "token.actions.githubusercontent.com:sub": "repo:MarjanHaghighi/eatinity:environment:production"
+          "token.actions.githubusercontent.com:sub": "repo:MarjanHaghighi@266442685/eatinity@1319734786:environment:production"
         }
       }
     }

@@ -32,6 +32,7 @@ jobs:
         with:
           role-to-assume: ${{ vars.AWS_OIDC_ROLE_ARN }}
           aws-region: ca-central-1
+          retry-max-attempts: 2
 
       - name: Prove temporary AWS identity
         run: aws sts get-caller-identity

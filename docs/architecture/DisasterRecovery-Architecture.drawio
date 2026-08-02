@@ -1,0 +1,183 @@
+<mxfile host="Electron" agent="claude">
+  <diagram name="Disaster Recovery Architecture" id="Disaster_Recovery_Architecture">
+    <mxGraphModel dx="1717" dy="1043" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2000" pageHeight="1150" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n3" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=#99FFFF;align=center;verticalAlign=middle;rounded=0;fontStyle=1;fontSize=22;" value="AWS DISASTER RECOVERY ARCHITECTURE" vertex="1">
+          <mxGeometry height="34" width="1000" x="330" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="n4" parent="1" style="swimlane;whiteSpace=wrap;html=1;strokeColor=#00CC00;fontSize=13;fontStyle=1;align=center;verticalAlign=top;startSize=28;" value="Primary Region us-east-1" vertex="1">
+          <mxGeometry height="730" width="420" x="60" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="n5" parent="n4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8CECC;strokeColor=#b85450;fontSize=11;align=center;verticalAlign=middle;" value="DynamoDB tables&#xa;Products, Categories,&#xa;Orders, Users, Audit Log" vertex="1">
+          <mxGeometry height="70" width="360" x="30" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n6" parent="n4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8CECC;strokeColor=#b85450;fontSize=11;align=center;verticalAlign=middle;" value="S3 buckets&#xa;Website + Product Images" vertex="1">
+          <mxGeometry height="60" width="360" x="30" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="n7" parent="n4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673a6;fontSize=11;align=center;verticalAlign=middle;" value="Cognito User Pool" vertex="1">
+          <mxGeometry height="55" width="360" x="30" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="n8" parent="n4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82b366;fontSize=11;align=center;verticalAlign=middle;" value="CloudFront Distribution" vertex="1">
+          <mxGeometry height="55" width="360" x="30" y="305" as="geometry" />
+        </mxCell>
+        <mxCell id="n9" parent="n4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#d79b00;fontSize=11;align=center;verticalAlign=middle;" value="API Gateway + Lambda&#xa;(Products/Orders/Users/Payment/Admin)" vertex="1">
+          <mxGeometry height="70" width="360" x="30" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="n10" parent="n4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#d79b00;fontSize=11;align=center;verticalAlign=middle;" value="SES regional configuration" vertex="1">
+          <mxGeometry height="55" width="360" x="30" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="n11" parent="n4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82b366;fontSize=11;align=center;verticalAlign=middle;" value="Route 53 (eatinity.ca)" vertex="1">
+          <mxGeometry height="55" width="360" x="30" y="545" as="geometry" />
+        </mxCell>
+        <mxCell id="n12" parent="n4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D0CEE2;strokeColor=#56517e;fontSize=11;align=center;verticalAlign=middle;" value="AWS Backup source vault&#xa;(daily at 05:00 UTC)&#xa;35-day retention" vertex="1">
+          <mxGeometry height="65" width="360" x="30" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="n13" edge="1" parent="1" source="n5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n12" value="backup plan">
+          <mxGeometry relative="1" x="-0.0196" y="70" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n15" parent="1" style="swimlane;whiteSpace=wrap;html=1;strokeColor=#994C00;fontSize=13;fontStyle=1;align=center;verticalAlign=top;startSize=28;" value="Backup &amp; Replication" vertex="1">
+          <mxGeometry height="730" width="260" x="500" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="n16" parent="n15" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D0CEE2;strokeColor=#56517e;fontSize=11;align=center;verticalAlign=middle;" value="Cross-region copy&#xa;(daily schedule)&#xa;90-day retention" vertex="1">
+          <mxGeometry height="80" width="180" x="40" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="n17" edge="1" parent="1" source="n12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n16" value="copy job">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n18" parent="1" style="swimlane;whiteSpace=wrap;html=1;strokeColor=#0000CC;fontSize=13;fontStyle=1;align=center;verticalAlign=top;startSize=28;" value="Recovery Region ca-central-1" vertex="1">
+          <mxGeometry height="730" width="420" x="780" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="rvJjgJ5V3e27y2Eoj5Jj-2" edge="1" parent="n18" source="n19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="n21" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n19" parent="n18" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D0CEE2;strokeColor=#56517e;fontSize=11;align=center;verticalAlign=middle;" value="AWS Backup recovery vault" vertex="1">
+          <mxGeometry height="55" width="360" x="30" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n20" parent="n18" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8CECC;strokeColor=#b85450;fontSize=11;align=center;verticalAlign=middle;" value="Restored DynamoDB tables" vertex="1">
+          <mxGeometry height="55" width="360" x="30" y="135" as="geometry" />
+        </mxCell>
+        <mxCell id="n21" parent="n18" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8CECC;strokeColor=#b85450;fontSize=11;align=center;verticalAlign=middle;" value="Restored S3 buckets" vertex="1">
+          <mxGeometry height="55" width="360" x="30" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="n22" parent="n18" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673a6;fontSize=11;align=center;verticalAlign=middle;" value="Recovered Cognito users&#xa;(re-imported)" vertex="1">
+          <mxGeometry height="60" width="360" x="30" y="285" as="geometry" />
+        </mxCell>
+        <mxCell id="n23" parent="n18" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#d79b00;fontSize=11;align=center;verticalAlign=middle;" value="Rebuilt API Gateway + Lambda&#xa;(via Terraform)" vertex="1">
+          <mxGeometry height="65" width="360" x="30" y="365" as="geometry" />
+        </mxCell>
+        <mxCell id="n24" parent="n18" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#d79b00;fontSize=11;align=center;verticalAlign=middle;" value="Regional SES configuration" vertex="1">
+          <mxGeometry height="55" width="360" x="30" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="n25" parent="n18" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82b366;fontSize=11;align=center;verticalAlign=middle;" value="Recovery CloudFront distribution" vertex="1">
+          <mxGeometry height="55" width="360" x="30" y="525" as="geometry" />
+        </mxCell>
+        <mxCell id="n33" parent="n18" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82b366;fontSize=11;align=center;verticalAlign=middle;" value="Terraform apply&#xa;(recreates infra in recovery region)" vertex="1">
+          <mxGeometry height="65" width="360" x="30" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="n26" edge="1" parent="1" source="n16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n19" value="restore into">
+          <mxGeometry relative="1" x="-0.0091" y="-110" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n28" edge="1" parent="1" source="n19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n21" value="restore">
+          <mxGeometry relative="1" x="-0.0526" y="120" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n29" edge="1" parent="1" source="n23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n20" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n30" edge="1" parent="1" source="n23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n22" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n31" edge="1" parent="1" source="n25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n21" value="origin (OAC)">
+          <mxGeometry relative="1" x="-0.1154" y="-80" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n32" edge="1" parent="1" source="n23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n24" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n34" edge="1" parent="1" source="n33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n23" value="provision">
+          <mxGeometry relative="1" y="-70" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="990" y="680" />
+              <mxPoint x="990" y="680" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n35" edge="1" parent="1" source="n33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n25" value="provision">
+          <mxGeometry relative="1" x="0.3333" y="-40" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n36" edge="1" parent="1" source="n33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n22" value="provision">
+          <mxGeometry relative="1" x="-0.0189" y="-120" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n37" edge="1" parent="1" source="n33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n24" value="provision">
+          <mxGeometry relative="1" x="0.1429" y="-140" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n38" parent="1" style="swimlane;whiteSpace=wrap;html=1;strokeColor=#FF00FF;fontSize=13;fontStyle=1;align=center;verticalAlign=top;startSize=28;" value="Validation &amp; Cutover" vertex="1">
+          <mxGeometry height="730" width="300" x="1240" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="n39" parent="n38" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#d6b656;fontSize=11;align=left;verticalAlign=middle;" value="&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;Validation checks:&lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;data integrity, health checks,&lt;br&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;&amp;nbsp; &amp;nbsp; &amp;nbsp; smoke tests" vertex="1">
+          <mxGeometry height="85" width="240" x="30" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n40" parent="n38" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#d6b656;fontSize=11;align=center;verticalAlign=middle;" value="Pass / Fail gate&#xa;(manual or automated)" vertex="1">
+          <mxGeometry height="60" width="240" x="30" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="n41" parent="n38" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82b366;fontSize=11;align=center;verticalAlign=middle;" value="Route 53 DNS cutover&#xa;to recovery region" vertex="1">
+          <mxGeometry height="65" width="240" x="30" y="275" as="geometry" />
+        </mxCell>
+        <mxCell id="n42" parent="n38" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#666666;fontSize=11;align=center;verticalAlign=middle;" value="Targets: RTO 4 hours&#xa;RPO 24 hours&#xa;Record actual drill times" vertex="1">
+          <mxGeometry height="60" width="240" x="30" y="375" as="geometry" />
+        </mxCell>
+        <mxCell id="n43" edge="1" parent="1" source="n20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;dashed=1;strokeColor=#999999;" target="n39" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n44" edge="1" parent="1" source="n23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;dashed=1;strokeColor=#999999;" target="n39" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n45" edge="1" parent="1" source="n25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;dashed=1;strokeColor=#999999;" target="n39" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n46" edge="1" parent="1" source="n39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n40" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n47" edge="1" parent="1" source="n40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n41" value="pass -&gt;&#xa;cutover DNS">
+          <mxGeometry relative="1" x="0.1429" y="50" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n48" edge="1" parent="1" source="n41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;dashed=1;strokeColor=#999999;" target="n11" value="failover from&#xa;(monitored)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n49" edge="1" parent="1" source="n41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n25" value="route to">
+          <mxGeometry relative="1" x="-0.3165" y="2" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="990" y="428" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n50" edge="1" parent="1" source="n40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n42" value="record">
+          <mxGeometry relative="1" x="0.037" y="70" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n51" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;fontSize=10;align=center;verticalAlign=middle;" value="Notes: Regional-failure recovery uses daily AWS Backup copies, Terraform reconstruction, data-integrity checks, health checks, and smoke tests before Route 53 cutover. Actual drill timestamps must be recorded as evidence." vertex="1">
+          <mxGeometry height="45" width="1480" x="70" y="870" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

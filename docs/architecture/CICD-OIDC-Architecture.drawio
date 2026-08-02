@@ -1,0 +1,202 @@
+<mxfile host="Electron" agent="claude">
+  <diagram name="CI/CD and AWS OIDC Architecture" id="CI/CD_and_AWS_OIDC_Architecture">
+    <mxGraphModel dx="1605" dy="963" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2100" pageHeight="1150" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="n3" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=#99FFFF;align=center;verticalAlign=middle;rounded=0;fontStyle=1;fontSize=22;" value="CI/CD PIPELINE &amp; AWS OIDC ARCHITECTURE" vertex="1">
+          <mxGeometry height="34" width="1050" x="260" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="n4" parent="1" style="swimlane;whiteSpace=wrap;html=1;strokeColor=#00CC00;fontSize=13;fontStyle=1;align=center;verticalAlign=top;startSize=28;" value="Source Control" vertex="1">
+          <mxGeometry height="620" width="220" x="60" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="n5" parent="n4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6c8ebf;fontSize=11;align=center;verticalAlign=middle;" value="Developer" vertex="1">
+          <mxGeometry height="55" width="160" x="30" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n6" parent="n4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82b366;fontSize=11;align=center;verticalAlign=middle;" value="GitHub Repository" vertex="1">
+          <mxGeometry height="55" width="160" x="30" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="n7" parent="n4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82b366;fontSize=11;align=center;verticalAlign=middle;" value="GitHub Actions&#xa;(push / PR / manual dispatch)" vertex="1">
+          <mxGeometry height="65" width="160" x="30" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="n10" parent="n4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D0CEE2;strokeColor=#56517e;fontSize=11;align=center;verticalAlign=middle;" value="GitHub Environment&#xa;(production)" vertex="1">
+          <mxGeometry height="60" width="160" x="30" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="n11" parent="n4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D0CEE2;strokeColor=#56517e;fontSize=11;align=center;verticalAlign=middle;" value="Environment vars&#xa;&amp; GitHub Secrets" vertex="1">
+          <mxGeometry height="60" width="160" x="30" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="n12" parent="n4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D0CEE2;strokeColor=#56517e;fontSize=11;align=center;verticalAlign=middle;" value="Manual approval gate&#xa;before prod deploy" vertex="1">
+          <mxGeometry height="65" width="160" x="30" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="n8" edge="1" parent="1" source="n5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n6" value="push / PR">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n9" edge="1" parent="1" source="n6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n7" value="trigger">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n13" edge="1" parent="1" source="n7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n10" value="uses">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n14" edge="1" parent="1" source="n10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n11" value="injects">
+          <mxGeometry relative="1" x="0.3333" y="20" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n15" edge="1" parent="1" source="n10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n12" value="requires">
+          <mxGeometry relative="1" y="-70" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n16" parent="1" style="swimlane;whiteSpace=wrap;html=1;strokeColor=#994C00;fontSize=13;fontStyle=1;align=center;verticalAlign=top;startSize=28;" value="Single GitHub Actions Workflow" vertex="1">
+          <mxGeometry height="620" width="520" x="320" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="n17" parent="n16" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#d79b00;fontSize=11;align=center;verticalAlign=middle;" value="Application &amp; IaC Job" vertex="1">
+          <mxGeometry height="30" width="150" x="30" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="n18" parent="n16" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#d79b00;fontSize=10;align=center;verticalAlign=middle;" value="Frontend lint + build" vertex="1">
+          <mxGeometry height="55" width="150" x="30" y="95" as="geometry" />
+        </mxCell>
+        <mxCell id="n19" parent="n16" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#d79b00;fontSize=10;align=center;verticalAlign=middle;" value="Python tests +&#xa;Lambda packaging" vertex="1">
+          <mxGeometry height="45" width="150" x="30" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="n20" parent="n16" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#d79b00;fontSize=10;align=center;verticalAlign=middle;" value="Terraform fmt + validate" vertex="1">
+          <mxGeometry height="50" width="150" x="30" y="215" as="geometry" />
+        </mxCell>
+        <mxCell id="n24" parent="n16" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#d6b656;fontSize=11;align=center;verticalAlign=middle;" value="Parallel Security Gates" vertex="1">
+          <mxGeometry height="30" width="150" x="190" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="n25" parent="n16" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#d6b656;fontSize=10;align=center;verticalAlign=middle;" value="Trivy dependency +&#xa;vulnerability scan" vertex="1">
+          <mxGeometry height="45" width="150" x="190" y="95" as="geometry" />
+        </mxCell>
+        <mxCell id="n26" parent="n16" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#d6b656;fontSize=10;align=center;verticalAlign=middle;" value="Trivy secret + IaC scan" vertex="1">
+          <mxGeometry height="40" width="150" x="190" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="n27" parent="n16" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#d6b656;fontSize=10;align=center;verticalAlign=middle;" value="SonarQube Community&#xa;Build analysis" vertex="1">
+          <mxGeometry height="40" width="150" x="190" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="n28" parent="n16" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#d6b656;fontSize=10;align=center;verticalAlign=middle;" value="Quality Gate +&#xa;HIGH / CRITICAL blocking" vertex="1">
+          <mxGeometry height="40" width="150" x="190" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="n29" parent="n16" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#d6b656;fontSize=10;align=center;verticalAlign=middle;" value="Required before deployment" vertex="1">
+          <mxGeometry height="50" width="150" x="190" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="n35" parent="n16" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82b366;fontSize=11;align=center;verticalAlign=middle;" value="OIDC Production Deployment" vertex="1">
+          <mxGeometry height="30" width="150" x="350" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="n36" parent="n16" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82b366;fontSize=10;align=center;verticalAlign=middle;" value="workflow_dispatch:&#xa;deploy = true" vertex="1">
+          <mxGeometry height="45" width="150" x="350" y="95" as="geometry" />
+        </mxCell>
+        <mxCell id="n37" parent="n16" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82b366;fontSize=10;align=center;verticalAlign=middle;" value="production Environment&#xa;manual approval" vertex="1">
+          <mxGeometry height="40" width="150" x="350" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="n38" parent="n16" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D0CEE2;strokeColor=#56517e;fontSize=10;align=center;verticalAlign=middle;" value="Assume one least-privilege&#xa;deploy IAM role" vertex="1">
+          <mxGeometry height="40" width="150" x="350" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="n39" parent="n16" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82b366;fontSize=10;align=center;verticalAlign=middle;" value="Terraform apply +&#xa;frontend / Lambda deploy" vertex="1">
+          <mxGeometry height="40" width="150" x="350" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="n40" parent="n16" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82b366;fontSize=10;align=center;verticalAlign=middle;" value="Post-deployment&#xa;smoke tests" vertex="1">
+          <mxGeometry height="50" width="150" x="350" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="n46" parent="n16" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DAE8FC;strokeColor=#6c8ebf;fontSize=10;align=center;verticalAlign=middle;" value="Deployment runs only after application, IaC,&#xa;Trivy, and SonarQube gates succeed" vertex="1">
+          <mxGeometry height="55" width="460" x="30" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="n21" edge="1" parent="1" source="n7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n18" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n22" edge="1" parent="1" source="n18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n19" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n23" edge="1" parent="1" source="n19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n20" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n30" edge="1" parent="1" source="n7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n25" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n31" edge="1" parent="1" source="n25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n26" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n32" edge="1" parent="1" source="n26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n27" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n33" edge="1" parent="1" source="n27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n28" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n34" edge="1" parent="1" source="n28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n29" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n41" edge="1" parent="1" source="n7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n36" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n42" edge="1" parent="1" source="n36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n37" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n43" edge="1" parent="1" source="n37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n38" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n44" edge="1" parent="1" source="n38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n39" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n45" edge="1" parent="1" source="n39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n40" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n47" parent="1" style="swimlane;whiteSpace=wrap;html=1;strokeColor=#0000CC;fontSize=13;fontStyle=1;align=center;verticalAlign=top;startSize=28;" value="AWS OIDC &amp; IAM" vertex="1">
+          <mxGeometry height="620" width="260" x="880" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="n48" parent="n47" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D0CEE2;strokeColor=#56517e;fontSize=10;align=center;verticalAlign=middle;" value="IAM OIDC Provider&#xa;(token.actions.githubusercontent.com)" vertex="1">
+          <mxGeometry height="75" width="200" x="30" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="n49" parent="n47" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D0CEE2;strokeColor=#56517e;fontSize=10;align=center;verticalAlign=middle;" value="Trust scoped to repo +&#xa;production Environment&#xa;(main workflow trigger)" vertex="1">
+          <mxGeometry height="55" width="200" x="30" y="175" as="geometry" />
+        </mxCell>
+        <mxCell id="n50" parent="n47" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D0CEE2;strokeColor=#56517e;fontSize=10;align=center;verticalAlign=middle;" value="Issues short-lived&#xa;AWS credentials&#xa;(no long-term keys)" vertex="1">
+          <mxGeometry height="65" width="200" x="30" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="n51" edge="1" parent="1" source="n48" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n49" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n52" edge="1" parent="1" source="n49" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n50" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n53" edge="1" parent="1" source="n50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n38" value="assume role">
+          <mxGeometry relative="1" x="0.2648" y="30" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="n55" edge="1" parent="1" source="n29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n36" value="unblocks">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n56" parent="1" style="swimlane;whiteSpace=wrap;html=1;strokeColor=#FF00FF;fontSize=13;fontStyle=1;align=center;verticalAlign=top;startSize=28;" value="Deployment Targets" vertex="1">
+          <mxGeometry height="620" width="320" x="1180" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="n57" parent="n56" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82b366;fontSize=11;align=center;verticalAlign=middle;" value="Terraform apply&#xa;(infrastructure)" vertex="1">
+          <mxGeometry height="60" width="260" x="30" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n58" parent="n56" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82b366;fontSize=11;align=center;verticalAlign=middle;" value="S3 upload +&#xa;CloudFront invalidation" vertex="1">
+          <mxGeometry height="60" width="260" x="30" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="n59" parent="n56" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82b366;fontSize=11;align=center;verticalAlign=middle;" value="Lambda / API Gateway&#xa;deployment" vertex="1">
+          <mxGeometry height="60" width="260" x="30" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="n60" edge="1" parent="1" source="n39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n57" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n61" edge="1" parent="1" source="n39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n58" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n62" edge="1" parent="1" source="n39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;strokeColor=#333333;" target="n59" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n63" edge="1" parent="1" source="n40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;dashed=1;strokeColor=#999999;" target="n57" value="verifies">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n66" edge="1" parent="1" source="n12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=10;endArrow=block;dashed=1;strokeColor=#FF6600;" target="n57" value="gates">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n69" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;fontSize=10;align=center;verticalAlign=middle;" value="Notes: One workflow runs validation and security jobs in parallel. Production deployment is manually approved, assumes one least-privilege OIDC role, and runs smoke tests. No long-lived AWS keys are stored." vertex="1">
+          <mxGeometry height="45" width="1170" x="180" y="750" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

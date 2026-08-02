@@ -128,7 +128,7 @@ jobs:
           fetch-depth: 0
 
       - name: Verify SonarQube configuration
-        shell: pwsh
+        shell: powershell
         env:
           SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

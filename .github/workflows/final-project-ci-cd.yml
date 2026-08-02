@@ -118,7 +118,8 @@ jobs:
 
   sonarqube:
     name: SonarQube Community Edition analysis
-    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+    runs-on: [self-hosted, Windows, X64]
     environment: ci
     steps:
       - name: Check out repository with analysis history

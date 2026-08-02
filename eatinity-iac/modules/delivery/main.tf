@@ -12,6 +12,7 @@ resource "aws_cloudfront_distribution" "website" {
   default_root_object = "index.html"
   comment             = "${var.resource_prefix} frontend"
   aliases             = var.use_custom_domain ? [var.domain_name, "www.${var.domain_name}"] : []
+  web_acl_id          = var.web_acl_arn
 
   origin {
     domain_name              = var.website_bucket.domain

@@ -8,6 +8,10 @@ variable "acm_certificate_arn" {
 }
 variable "manage_public_dns" { type = bool }
 variable "aws_region" { type = string }
+variable "web_acl_arn" {
+  description = "ARN of the us-east-1 WAFv2 web ACL protecting CloudFront"
+  type        = string
+}
 variable "tags" {
   type    = map(string)
   default = {}

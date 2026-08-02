@@ -24,6 +24,7 @@ allowed_origins       = ["http://localhost:3000", "http://localhost:5173"]
 # Recovery validation must not change live DNS or use its certificate.
 manage_public_dns = false
 use_custom_domain = false
+cloudfront_web_acl_arn = null
 enable_ses              = false
 manage_ses_dns          = false
 ses_notification_emails = []

@@ -1,3 +1,6 @@
+# S3-managed AES-256 encryption is intentional for static public content; a
+# customer-managed KMS key would add cost without changing the data's exposure.
+#trivy:ignore:AWS-0132:exp:2026-12-31
 resource "aws_s3_bucket" "website" {
   bucket        = var.website_bucket_name
   force_destroy = var.force_destroy
@@ -28,6 +31,9 @@ resource "aws_s3_bucket_public_access_block" "website" {
   restrict_public_buckets = true
 }
 
+# Product images are intentionally public, contain no customer data, and need
+# stable URLs for the storefront. ACLs remain blocked and encryption is enabled.
+#trivy:ignore:AWS-0087:exp:2026-12-31 trivy:ignore:AWS-0093:exp:2026-12-31 trivy:ignore:AWS-0132:exp:2026-12-31
 resource "aws_s3_bucket" "images" {
   bucket        = var.images_bucket_name
   force_destroy = var.force_destroy

@@ -97,6 +97,7 @@ module "delivery" {
   acm_certificate_arn = var.acm_certificate_arn
   manage_public_dns   = var.manage_public_dns
   aws_region          = var.aws_region
+  web_acl_arn         = var.cloudfront_web_acl_arn
   tags                = local.common_tags
 }
 

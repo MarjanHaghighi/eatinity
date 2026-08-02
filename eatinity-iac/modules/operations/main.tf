@@ -28,15 +28,17 @@ resource "aws_ses_email_identity" "sandbox_recipient" {
 }
 
 resource "aws_sns_topic" "ses_bounce" {
-  count = var.enable_ses ? 1 : 0
-  name  = "${var.resource_prefix}-ses-bounces"
-  tags  = var.tags
+  count             = var.enable_ses ? 1 : 0
+  name              = "${var.resource_prefix}-ses-bounces"
+  kms_master_key_id = "alias/aws/sns"
+  tags              = var.tags
 }
 
 resource "aws_sns_topic" "ses_complaint" {
-  count = var.enable_ses ? 1 : 0
-  name  = "${var.resource_prefix}-ses-complaints"
-  tags  = var.tags
+  count             = var.enable_ses ? 1 : 0
+  name              = "${var.resource_prefix}-ses-complaints"
+  kms_master_key_id = "alias/aws/sns"
+  tags              = var.tags
 }
 
 resource "aws_ses_identity_notification_topic" "bounce" {
@@ -106,8 +108,9 @@ resource "aws_route53_record" "ses_mail_from_spf" {
 }
 
 resource "aws_sns_topic" "orders" {
-  name = "${var.resource_prefix}-order-notifications"
-  tags = var.tags
+  name              = "${var.resource_prefix}-order-notifications"
+  kms_master_key_id = "alias/aws/sns"
+  tags              = var.tags
 }
 
 resource "aws_sns_topic_subscription" "email" {

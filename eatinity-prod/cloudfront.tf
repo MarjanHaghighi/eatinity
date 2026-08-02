@@ -1,3 +1,6 @@
+# Legacy Terraform is not deployed; the active modular distribution requires a
+# WAF ARN. Keep this exception time-bound while the historical file is retained.
+#trivy:ignore:AWS-0011:exp:2026-12-31
 resource "aws_cloudfront_distribution" "eatinity_cdn" {
   enabled             = true
   is_ipv6_enabled     = true

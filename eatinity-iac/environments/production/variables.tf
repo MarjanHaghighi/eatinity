@@ -130,6 +130,12 @@ variable "acm_certificate_arn" {
   type    = string
   default = null
 }
+
+variable "cloudfront_web_acl_arn" {
+  description = "ARN of the existing us-east-1 WAFv2 web ACL for CloudFront"
+  type        = string
+  default     = null
+}
 variable "manage_public_dns" {
   type    = bool
   default = false

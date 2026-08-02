@@ -15,6 +15,18 @@ jobs:
       contents: read
       id-token: write
     steps:
+      - name: Display non-secret OIDC claims
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const token = await core.getIDToken('sts.amazonaws.com');
+            const claims = JSON.parse(
+              Buffer.from(token.split('.')[1], 'base64url').toString('utf8')
+            );
+            for (const name of ['sub', 'aud', 'repository', 'ref', 'environment']) {
+              core.info(`${name}: ${claims[name] ?? '(not present)'}`);
+            }
+
       - name: Configure temporary AWS credentials through OIDC
         uses: aws-actions/configure-aws-credentials@v6.1.0
         with:

@@ -36,6 +36,7 @@ crash.*.log
 eatinity-iac/migration/job-records/
 *.out.json
 smoke-*.json
+.eatinity-recovery/
 
 # Editors and operating systems
 .vscode/

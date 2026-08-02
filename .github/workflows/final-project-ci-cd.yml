@@ -141,19 +141,88 @@ jobs:
           }
 
       - name: Run SonarQube scan
-        uses: SonarSource/sonarqube-scan-action@v8.1.0
-        with:
-          skipSignatureVerification: true
+        shell: powershell
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
+        run: |
+          $scannerVersion = "8.1.0.6389"
+          $installRoot = Join-Path $env:RUNNER_TEMP "sonar-scanner-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT"
+          $archivePath = Join-Path $env:RUNNER_TEMP "sonar-scanner-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT.zip"
+          $downloadUrl = "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$scannerVersion-windows-x64.zip"
+
+          Invoke-WebRequest -Uri $downloadUrl -OutFile $archivePath
+          Expand-Archive -LiteralPath $archivePath -DestinationPath $installRoot
+
+          $scannerHome = Join-Path $installRoot "sonar-scanner-$scannerVersion-windows-x64"
+          $scanner = Join-Path $scannerHome "bin\sonar-scanner.bat"
+          if (-not (Test-Path -LiteralPath $scanner)) {
+            throw "SonarScanner executable was not found after extraction"
+          }
+
+          & $scanner
+          if ($LASTEXITCODE -ne 0) {
+            throw "SonarScanner failed with exit code $LASTEXITCODE"
+          }
 
       - name: Enforce SonarQube Quality Gate
-        uses: SonarSource/sonarqube-quality-gate-action@v1.2.0
+        shell: powershell
         timeout-minutes: 5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
+        run: |
+          $reportPath = ".scannerwork\report-task.txt"
+          if (-not (Test-Path -LiteralPath $reportPath)) {
+            throw "SonarQube task report was not generated"
+          }
+
+          $report = @{}
+          Get-Content -LiteralPath $reportPath | ForEach-Object {
+            $parts = $_ -split "=", 2
+            if ($parts.Count -eq 2) {
+              $report[$parts[0]] = $parts[1]
+            }
+          }
+
+          if ([string]::IsNullOrWhiteSpace($report["ceTaskId"])) {
+            throw "SonarQube task ID is missing from the scan report"
+          }
+
+          $basicToken = [Convert]::ToBase64String(
+            [Text.Encoding]::ASCII.GetBytes("${env:SONAR_TOKEN}:")
+          )
+          $headers = @{ Authorization = "Basic $basicToken" }
+          $taskUrl = "$env:SONAR_HOST_URL/api/ce/task?id=$($report['ceTaskId'])"
+          $analysisId = $null
+
+          for ($attempt = 1; $attempt -le 150; $attempt++) {
+            $taskResponse = Invoke-RestMethod -Uri $taskUrl -Headers $headers
+            $taskStatus = $taskResponse.task.status
+            Write-Host "SonarQube compute task status: $taskStatus"
+
+            if ($taskStatus -eq "SUCCESS") {
+              $analysisId = $taskResponse.task.analysisId
+              break
+            }
+            if ($taskStatus -in @("FAILED", "CANCELED")) {
+              throw "SonarQube compute task ended with status $taskStatus"
+            }
+            Start-Sleep -Seconds 2
+          }
+
+          if ([string]::IsNullOrWhiteSpace($analysisId)) {
+            throw "Timed out waiting for the SonarQube compute task"
+          }
+
+          $gateUrl = "$env:SONAR_HOST_URL/api/qualitygates/project_status?analysisId=$analysisId"
+          $gateResponse = Invoke-RestMethod -Uri $gateUrl -Headers $headers
+          $gateStatus = $gateResponse.projectStatus.status
+          Write-Host "SonarQube Quality Gate: $gateStatus"
+
+          if ($gateStatus -ne "OK") {
+            throw "SonarQube Quality Gate failed with status $gateStatus"
+          }
 
   deploy:
     name: OIDC production deployment and smoke test

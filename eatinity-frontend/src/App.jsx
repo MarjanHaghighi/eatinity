@@ -1,7 +1,7 @@
 ﻿import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
-import Home from "./pages/Home";
-import Cart from "./pages/Cart";
+import Home from "./pages/home";
+import Cart from "./pages/cart";
 import Checkout from "./pages/Checkout";
 import SignUp from "./pages/SignUp";
 import ConfirmSignUp from "./pages/ConfirmSignUp";

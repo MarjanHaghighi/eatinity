@@ -1,0 +1,12 @@
+variable "resource_prefix" { type = string }
+variable "account_id" { type = string }
+variable "source_region" { type = string }
+variable "source_table_names" { type = map(string) }
+variable "source_bucket_names" { type = map(string) }
+variable "source_cognito_user_pool_id" { type = string }
+variable "destination_cognito_user_pool_arn" { type = string }
+variable "schedule_expression" { type = string }
+variable "source_retention_days" { type = number }
+variable "recovery_retention_days" { type = number }
+variable "operator_user_name" { type = string }
+variable "tags" { type = map(string) }

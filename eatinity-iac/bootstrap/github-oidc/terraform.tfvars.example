@@ -1,0 +1,7 @@
+aws_region                 = "ca-central-1"
+github_owner               = "REPLACE_WITH_GITHUB_OWNER"
+github_repository          = "REPLACE_WITH_REPOSITORY_NAME"
+github_environment         = "production"
+resource_prefix            = "eatinity"
+terraform_state_bucket_arn = "arn:aws:s3:::REPLACE_WITH_TERRAFORM_STATE_BUCKET"
+

@@ -1,0 +1,50 @@
+# Dependencies and build output
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+build/
+**/build/
+
+# Python generated files
+__pycache__/
+**/__pycache__/
+*.py[cod]
+
+# Local credentials and environment files
+credentials
+**/credentials
+.env
+.env.*
+!.env.example
+
+# Terraform local state, plans, variables, and provider cache
+.terraform/
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfvars
+!*.tfvars.example
+crash.log
+crash.*.log
+
+# Deployment packages and local evidence
+*.zip
+**/stripe_package/
+eatinity-iac/migration/job-records/
+*.out.json
+smoke-*.json
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local document build and render output
+.docx_build_*/
+.docx_deps/
+.final_docx_deps/
+.dr_report_render/
+.final_report_render/

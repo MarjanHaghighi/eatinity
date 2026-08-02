@@ -1,0 +1,10 @@
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+*.out.json
+smoke-*.json
+__pycache__/
+*.pyc
+migration/*.log
+migration/job-records/

@@ -1,0 +1,35 @@
+# Later main-region configuration. Do not use until recovery validation
+# succeeds and a separate main-region state and migration strategy are ready.
+aws_region                  = "us-east-1"
+allow_main_region_deployment = true
+project_name                = "eatinity"
+environment                 = "prod"
+
+disposable_environment        = false
+force_destroy_buckets         = false
+enable_deletion_protection    = true
+enable_point_in_time_recovery = true
+enable_s3_versioning          = true
+cloudwatch_log_retention_days = 30
+
+create_cognito_resources = true
+cognito_callback_urls     = ["https://eatinity.ca"]
+cognito_logout_urls       = ["https://eatinity.ca"]
+allowed_origins           = ["https://eatinity.ca", "https://www.eatinity.ca"]
+
+# Keep these disabled until the parallel stack is tested and traffic migration
+# is explicitly approved.
+manage_public_dns = false
+use_custom_domain = false
+enable_ses        = false
+sns_email_subscriptions = []
+ses_sandbox_recipient_emails = []
+ses_from_email = "orders@eatinity.ca"
+
+# Supply real secrets only through an uncommitted terraform.tfvars or an
+# approved secret workflow.
+stripe_secret_key     = "REPLACE_WITH_STRIPE_SECRET_KEY"
+stripe_webhook_secret = "REPLACE_WITH_STRIPE_WEBHOOK_SECRET"
+
+frontend_success_url = "https://eatinity.ca/success?order_id={CHECKOUT_SESSION_ID}"
+frontend_cancel_url  = "https://eatinity.ca/cancel"

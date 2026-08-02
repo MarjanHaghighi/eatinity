@@ -1,0 +1,9 @@
+[
+  { "categoryId": "main-food", "name": "Main Food", "displayOrder": 10, "active": true },
+  { "categoryId": "salad", "name": "Salad", "displayOrder": 20, "active": true },
+  { "categoryId": "soup", "name": "Soup", "displayOrder": 30, "active": true },
+  { "categoryId": "sandwich", "name": "Sandwich", "displayOrder": 40, "active": true },
+  { "categoryId": "pizza", "name": "Pizza", "displayOrder": 50, "active": true },
+  { "categoryId": "dessert", "name": "Dessert", "displayOrder": 60, "active": true },
+  { "categoryId": "drink", "name": "Drink", "displayOrder": 70, "active": true }
+]

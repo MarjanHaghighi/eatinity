@@ -1,0 +1,6 @@
+# Later protected main-region state. The bucket must be created and protected
+# separately and must not be part of either application stack.
+bucket  = "REPLACE_WITH_TERRAFORM_STATE_BUCKET"
+key     = "eatinity/production/us-east-1/terraform.tfstate"
+region  = "us-east-1"
+encrypt = true

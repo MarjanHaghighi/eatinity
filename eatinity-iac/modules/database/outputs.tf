@@ -1,0 +1,2 @@
+output "names" { value = { products = aws_dynamodb_table.products.name, categories = aws_dynamodb_table.categories.name, orders = aws_dynamodb_table.orders.name, audit = aws_dynamodb_table.audit.name, users = aws_dynamodb_table.users.name } }
+output "arns" { value = { products = aws_dynamodb_table.products.arn, categories = aws_dynamodb_table.categories.arn, orders = aws_dynamodb_table.orders.arn, audit = aws_dynamodb_table.audit.arn, users = aws_dynamodb_table.users.arn } }

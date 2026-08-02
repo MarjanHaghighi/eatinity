@@ -1,0 +1,110 @@
+[
+  {
+    "id": "p001",
+    "name": "Blueberry Pie",
+    "category": "dessert",
+    "price": 6.99,
+    "description": "Sweet blueberry pie with rich fruit filling.",
+    "imagePath": "foods/dessert/Blueberry%20Pie.avif",
+    "available": true
+  },
+  {
+    "id": "p002",
+    "name": "Chicken Bowl",
+    "category": "main-food",
+    "price": 14.99,
+    "description": "Fresh chicken bowl with rice and vegetables.",
+    "imagePath": "foods/main-food/Chicken%20Bowl.jfif",
+    "available": true
+  },
+  {
+    "id": "p003",
+    "name": "Chicken Rice",
+    "category": "main-food",
+    "price": 15.99,
+    "description": "Chicken with vegetables, tomato, and rice.",
+    "imagePath": "foods/main-food/Chicken%20Vegetable%20Tomatoe%20Rice.jpg",
+    "available": true
+  },
+  {
+    "id": "p004",
+    "name": "Coca Cola",
+    "category": "drink",
+    "price": 2.99,
+    "description": "Cold Coca Cola soft drink.",
+    "imagePath": "foods/drink/Coca%20Cola.jpg",
+    "available": true
+  },
+  {
+    "id": "p005",
+    "name": "Fresh Salad",
+    "category": "salad",
+    "price": 8.99,
+    "description": "Fresh healthy salad prepared daily.",
+    "imagePath": "foods/salad/Fresh%20Salad.jfif",
+    "available": true
+  },
+  {
+    "id": "p006",
+    "name": "Latte Coffee",
+    "category": "drink",
+    "price": 4.99,
+    "description": "Fresh latte coffee.",
+    "imagePath": "foods/drink/Latte%20Coffee.avif",
+    "available": true
+  },
+  {
+    "id": "p007",
+    "name": "Mix Kabab",
+    "category": "main-food",
+    "price": 18.99,
+    "description": "Grilled mixed kabab served with sides.",
+    "imagePath": "foods/main-food/Mix%20Kabab.webp",
+    "available": true
+  },
+  {
+    "id": "p009",
+    "name": "Onion Soup",
+    "category": "soup",
+    "price": 7.99,
+    "description": "Warm onion soup with rich flavour.",
+    "imagePath": "foods/soup/Onion%20Soup.avif",
+    "available": true
+  },
+  {
+    "id": "p010",
+    "name": "Pasta Meal",
+    "category": "main-food",
+    "price": 12.99,
+    "description": "Fresh pasta meal with rich sauce.",
+    "imagePath": "foods/main-food/Pasta%20Meal.jfif",
+    "available": true
+  },
+  {
+    "id": "p011",
+    "name": "Chocolate Dessert",
+    "category": "dessert",
+    "price": 10.99,
+    "description": "Rich chocolate dessert with cream and cookie layers.",
+    "imagePath": "foods/dessert/Chocolate%20Dessert.avif",
+    "available": true
+  },
+  {
+    "id": "p012",
+    "name": "Supreme Pizza",
+    "category": "pizza",
+    "price": 16.99,
+    "description": "Supreme pizza with fresh toppings.",
+    "imagePath": "foods/pizza/Supreme%20Pizza.jpg",
+    "available": true
+  },
+  {
+    "id": "p013",
+    "name": "Veggie Wrap",
+    "category": "sandwich",
+    "price": 9.99,
+    "description": "Vegetarian wrap with fresh ingredients.",
+    "imagePath": "foods/sandwich/Veggie%20Wrap.jfif",
+    "available": true
+  }
+]

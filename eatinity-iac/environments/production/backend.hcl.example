@@ -1,0 +1,6 @@
+# Optional remote state configuration. Create and protect the state bucket
+# separately; never include it in the recoverable application stack.
+bucket  = "REPLACE_WITH_TERRAFORM_STATE_BUCKET"
+key     = "eatinity/production/ca-central-1/terraform.tfstate"
+region  = "ca-central-1"
+encrypt = true

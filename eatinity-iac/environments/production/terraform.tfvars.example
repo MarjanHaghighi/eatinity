@@ -1,0 +1,38 @@
+# Full recovery-validation stack, isolated from the existing main project.
+aws_region  = "ca-central-1"
+allow_main_region_deployment = false
+project_name = "eatinity"
+environment = "prod"
+
+# Enable only after confirming source names and AWS Backup prerequisites.
+enable_enterprise_backup = false
+backup_operator_user_name = "REPLACE_WITH_IAM_USER_NAME"
+source_aws_region        = "us-east-1"
+
+disposable_environment         = false
+force_destroy_buckets          = false
+enable_deletion_protection     = true
+enable_point_in_time_recovery  = true
+enable_s3_versioning           = true
+cloudwatch_log_retention_days  = 30
+
+create_cognito_resources = true
+cognito_callback_urls = ["http://localhost:3000", "http://localhost:5173"]
+cognito_logout_urls   = ["http://localhost:3000", "http://localhost:5173"]
+allowed_origins       = ["http://localhost:3000", "http://localhost:5173"]
+
+# Recovery validation must not change live DNS or use its certificate.
+manage_public_dns = false
+use_custom_domain = false
+enable_ses              = false
+manage_ses_dns          = false
+ses_notification_emails = []
+ses_sandbox_recipient_emails = []
+ses_from_email = "orders@eatinity.ca"
+sns_email_subscriptions = []
+
+# Terraform creates the secret container but never stores its value in state.
+# After apply, set a JSON value outside Terraform:
+# aws secretsmanager put-secret-value --secret-id <output-name> --secret-string file://stripe-secret.json
+# Expected JSON keys: stripe_secret_key and stripe_webhook_secret
+secret_recovery_window_days = 7

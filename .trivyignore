@@ -1,0 +1,3 @@
+# Eatinity is a client-side Vite SPA and does not use the affected unstable RSC APIs.
+# Review when a compatible react-router-dom 8.3.0 or later release is published.
+GHSA-qwww-vcr4-c8h2 exp:2026-09-30

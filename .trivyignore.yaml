@@ -1,9 +1,0 @@
-vulnerabilities:
-  - id: GHSA-qwww-vcr4-c8h2
-    paths:
-      - "eatinity-frontend/package-lock.json"
-    expired_at: 2026-09-30
-    statement: >-
-      Eatinity is a client-side Vite SPA and does not use React Router's unstable
-      RSC server APIs, the only affected mode. No react-router-dom 8.3.0 package
-      exists; review when a compatible patched DOM release is published.

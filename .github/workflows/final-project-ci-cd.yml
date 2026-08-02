@@ -128,13 +128,17 @@ jobs:
           fetch-depth: 0
 
       - name: Verify SonarQube configuration
-        shell: bash
+        shell: pwsh
         env:
           SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          test -n "$SONAR_HOST_URL" || { echo "SONAR_HOST_URL GitHub Environment variable is required"; exit 1; }
-          test -n "$SONAR_TOKEN" || { echo "SONAR_TOKEN GitHub Environment secret is required"; exit 1; }
+          if ([string]::IsNullOrWhiteSpace($env:SONAR_HOST_URL)) {
+            throw "SONAR_HOST_URL GitHub Environment variable is required"
+          }
+          if ([string]::IsNullOrWhiteSpace($env:SONAR_TOKEN)) {
+            throw "SONAR_TOKEN GitHub Environment secret is required"
+          }
 
       - name: Run SonarQube scan
         uses: SonarSource/sonarqube-scan-action@v8.1.0

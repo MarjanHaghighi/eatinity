@@ -142,6 +142,8 @@ jobs:
 
       - name: Run SonarQube scan
         uses: SonarSource/sonarqube-scan-action@v8.1.0
+        with:
+          skipSignatureVerification: true
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}

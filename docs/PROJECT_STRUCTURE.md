@@ -4,6 +4,8 @@ This document presents the main folders and important files in the eatinity
 repository. Generated dependencies, build output, caches, Terraform state,
 saved plans, Lambda ZIP packages, and local recovery working files are omitted.
 
+**Last verified:** August 2, 2026, after the final repository cleanup.
+
 ```text
 Eatinity/
 |-- .github/
@@ -117,6 +119,9 @@ Eatinity/
   guidance, administrator guides, and presentation material.
 - `bootstrap.sh` is the guarded entry point documented by the disaster-recovery
   runbook. It does not apply Terraform automatically.
+- The repository root intentionally contains only the five main project folders
+  and the essential Git, security, bootstrap, SonarQube, and README files shown
+  above.
 
 ## Intentionally omitted
 

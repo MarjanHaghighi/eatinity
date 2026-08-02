@@ -77,7 +77,8 @@ captured by the group because those systems require the group's accounts.
 ### 2.2 Non-functional requirements
 
 - HTTPS delivery through CloudFront and ACM.
-- Least-privilege IAM roles and protected JWT routes.
+- Scoped IAM policies and protected JWT routes, with a documented remaining
+  least-privilege improvement for the shared Lambda execution role.
 - No long-term AWS credentials in GitHub.
 - Runtime secrets in AWS Secrets Manager, not source code or Terraform state.
 - Repeatable Terraform deployment and safety checks against accidental destroy.
@@ -207,7 +208,21 @@ The `modules/secrets` module creates `<resource-prefix>/stripe` without a secret
 version, so credentials never enter Terraform state. An authorized operator uses
 `aws secretsmanager put-secret-value` with JSON keys `stripe_secret_key` and
 `stripe_webhook_secret`. Payment Lambdas receive only `STRIPE_SECRET_ARN` and
-have `GetSecretValue` permission on that ARN.
+retrieve the secret at runtime by calling `GetSecretValue`. The environment
+variable contains only the secret ARN; it does not contain the Stripe API key or
+webhook signing secret. Table names, bucket names, the Cognito pool ID, URLs,
+email addresses, and SNS ARNs are operational identifiers rather than secret
+values.
+
+The current Terraform implementation assigns one shared execution role to the
+application Lambdas. That role grants `secretsmanager:GetSecretValue` only for
+the specific Stripe secret ARN, which prevents access to unrelated secrets, but
+it also means non-payment Lambdas using the shared role technically receive the
+same permission. The next least-privilege improvement is to create a dedicated
+payment Lambda role for the checkout and webhook functions and remove Secrets
+Manager access from the general application role. This is recorded as a
+hardening improvement and does not mean that secret values are stored in source
+code, GitHub, Terraform state, or Lambda environment variables.
 
 ### 4.6 Configure GitHub OIDC and Environment
 
@@ -334,7 +349,9 @@ resources to the Eatinity name prefix.
 GitHub stores non-sensitive deployment identifiers in the protected `production`
 Environment and the Sonar host/token in the separate `ci` Environment. AWS credentials are never
 stored; OIDC creates a temporary STS session. Stripe credentials remain in AWS
-Secrets Manager and are fetched only by permitted Lambda roles. Logs, source,
+Secrets Manager and are fetched at runtime through an IAM policy restricted to
+the specific Stripe secret ARN. The current shared execution role should be
+split so only checkout and webhook retain that permission. Logs, source,
 screenshots, and video must not reveal secret values.
 
 ## 10. Testing Results

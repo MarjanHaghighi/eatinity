@@ -1,3 +1,11 @@
 # Eatinity is a client-side Vite SPA and does not use the affected unstable RSC APIs.
 # Review when a compatible react-router-dom 8.3.0 or later release is published.
 GHSA-qwww-vcr4-c8h2 exp:2026-09-30
+
+# AWS-managed SNS encryption satisfies this project's data classification; a
+# dedicated CMK would add recurring cost and publisher key-policy maintenance.
+AWS-0136 exp:2026-12-31
+
+# This applies only when the AWS default CloudFront certificate is used; the
+# eatinity.ca custom certificate path enforces TLSv1.2_2021.
+AWS-0013 exp:2026-12-31

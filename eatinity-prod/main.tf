@@ -4,14 +4,14 @@ provider "aws" {
 
 # Legacy Terraform is retained only as historical deployment documentation; the
 # active deployment root is eatinity-iac/environments/production.
-#trivy:ignore:AWS-0086:exp:2026-12-31 trivy:ignore:AWS-0087:exp:2026-12-31 trivy:ignore:AWS-0091:exp:2026-12-31 trivy:ignore:AWS-0093:exp:2026-12-31 trivy:ignore:AWS-0132:exp:2026-12-31
 # S3 bucket for product images
+#trivy:ignore:AWS-0086:exp:2026-12-31 trivy:ignore:AWS-0087:exp:2026-12-31 trivy:ignore:AWS-0091:exp:2026-12-31 trivy:ignore:AWS-0093:exp:2026-12-31 trivy:ignore:AWS-0132:exp:2026-12-31
 resource "aws_s3_bucket" "images" {
   bucket = var.images_bucket_name
 }
 
-#trivy:ignore:AWS-0086:exp:2026-12-31 trivy:ignore:AWS-0087:exp:2026-12-31 trivy:ignore:AWS-0091:exp:2026-12-31 trivy:ignore:AWS-0093:exp:2026-12-31 trivy:ignore:AWS-0132:exp:2026-12-31
 # S3 bucket for React website
+#trivy:ignore:AWS-0086:exp:2026-12-31 trivy:ignore:AWS-0087:exp:2026-12-31 trivy:ignore:AWS-0091:exp:2026-12-31 trivy:ignore:AWS-0093:exp:2026-12-31 trivy:ignore:AWS-0132:exp:2026-12-31
 resource "aws_s3_bucket" "website" {
   bucket = var.website_bucket_name
 }

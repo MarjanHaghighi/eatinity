@@ -18,6 +18,10 @@ Eatinity/
 |   |   `-- DisasterRecovery-Architecture.png
 |   |-- evidence/
 |   |   `-- sonarqube/                    # SonarQube evidence screenshots
+|   |-- guides/
+|   |   |-- ADMIN_USER_GUIDE.md
+|   |   |-- LOCAL_ADMIN_HANDOFF.md
+|   |   `-- LOCAL_VERIFICATION_GUIDE.md
 |   |-- CI_CD_SETUP.md
 |   |-- DISASTER_RECOVERY_RUNBOOK.md
 |   |-- EATINITY_FINAL_PROJECT_REPORT.md
@@ -98,9 +102,6 @@ Eatinity/
 |-- .trivyignore                          # Reviewed Trivy exceptions
 |-- bootstrap.sh                          # Regional deployment and DR entry point
 |-- sonar-project.properties              # SonarQube analysis configuration
-|-- package.json                          # Repository-level npm commands
-|-- ADMIN_USER_GUIDE.md
-|-- LOCAL_VERIFICATION_GUIDE.md
 `-- README.md
 ```
 
@@ -113,7 +114,7 @@ Eatinity/
 - `eatinity-iac` contains the reusable Terraform modules, production environment,
   OIDC bootstrap configuration, and disaster-recovery job scripts.
 - `docs` contains architecture diagrams, evidence, the final report, operational
-  guidance, and presentation material.
+  guidance, administrator guides, and presentation material.
 - `bootstrap.sh` is the guarded entry point documented by the disaster-recovery
   runbook. It does not apply Terraform automatically.
 

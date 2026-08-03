@@ -69,6 +69,7 @@ Eatinity/
 |   |   |-- Copy-RestoredDynamoData.ps1
 |   |   |-- Sync-CognitoRecoveryUsers.ps1
 |   |   |-- Sync-SesRecoveryTemplates.ps1
+|   |   |-- Test-RegionalPaymentRecovery.ps1
 |   |   `-- Deploy-RegionalFrontend.ps1
 |   |-- modules/
 |   |   |-- application/                  # API Gateway, Lambda, IAM and monitoring

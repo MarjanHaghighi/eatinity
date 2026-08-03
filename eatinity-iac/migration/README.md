@@ -178,3 +178,24 @@ run the read-only check:
 SES production access and sending quotas are regional account settings and
 must be requested/approved separately. Cognito passwords and MFA secrets are
 not exportable and remain documented recovery limitations.
+
+## Regional Stripe and sales-report validation
+
+Each recovery API requires its own Stripe test-mode webhook endpoint subscribed
+to `checkout.session.completed`. The destination endpoint's `whsec_...` signing
+secret belongs only in the destination Secrets Manager secret; it must not be
+copied from the main-region webhook endpoint.
+
+Run the read-only check after initializing Terraform for the recovery backend:
+
+```powershell
+.\Test-RegionalPaymentRecovery.ps1
+```
+
+The check reads only destination metadata and payment-status fields. It confirms
+that the sales-report GSI is active, describes the destination secret without
+reading its value, reports counts by payment status, and detects paid records
+that are missing `paidAt`. Pending orders do not belong in financial sales
+totals. If every order remains pending after a completed Stripe test checkout,
+verify the destination webhook registration, signing secret, event delivery,
+and destination Lambda logs.

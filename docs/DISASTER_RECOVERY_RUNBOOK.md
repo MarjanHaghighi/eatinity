@@ -243,6 +243,25 @@ URL, backup vaults, and backup role ARN.
 
 ## 10. Add the Stripe test secret outside Terraform
 
+First obtain the destination webhook URL:
+
+```bash
+terraform -chdir=eatinity-iac/environments/production \
+  output -raw stripe_webhook_url
+```
+
+In Stripe **Test mode**, create a separate webhook event destination for this
+exact recovery URL and subscribe it to `checkout.session.completed`. Do not
+reuse the main-region endpoint signing secret: each Stripe webhook endpoint has
+its own `whsec_...` signing secret. Copy the recovery endpoint's signing secret
+only into the destination Region's Secrets Manager value. The Stripe secret API
+key can remain the approved test-mode key.
+
+If this step is missing, checkout can create an order in the destination table,
+but the order stays `Pending Payment`. Sales reports intentionally query only
+orders with `paymentStatus = Paid` and a `paidAt` value, so every report will
+correctly show zero until the regional webhook processes a successful payment.
+
 Create a local file that is ignored and never committed:
 
 ```bash
@@ -269,6 +288,25 @@ aws secretsmanager put-secret-value \
 
 Delete the local file securely after validation. Never print or screenshot the
 secret value.
+
+Run the read-only regional payment diagnostic:
+
+```bash
+./bootstrap.sh payment-check \
+  --source-region "$SOURCE_REGION" \
+  --destination-region "$DESTINATION_REGION" \
+  --state-region "$STATE_REGION" \
+  --state-bucket "$STATE_BUCKET" \
+  --lock-table "$LOCK_TABLE" \
+  --backup-operator-user "$BACKUP_OPERATOR_USER"
+```
+
+It verifies the destination orders table, the sales-report index, secret
+metadata (never the secret value), and payment-status counts. If only pending
+orders exist, inspect the recovery endpoint in Stripe Workbench/Webhooks, resend
+its `checkout.session.completed` test event, and inspect the destination webhook
+Lambda logs. Never change the payment status manually: Stripe confirmation must
+remain the source of truth.
 
 ## 11. Start native source backups
 

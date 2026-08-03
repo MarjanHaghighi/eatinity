@@ -17,7 +17,7 @@ function SalesBarChart({ series, selectedLabel, onSelect }) {
             <small>{item.label}</small>
           </button>;
         })}
-      </div> : <p>No paid sales were found for this period.</p>}
+      </div> : <p>No paid sales were found for this period. Pending Payment orders are excluded until Stripe confirms payment through the regional webhook.</p>}
     </section>
   );
 }

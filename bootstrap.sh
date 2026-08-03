@@ -68,6 +68,7 @@ Safe actions (no infrastructure mutation):
   validate               Package Lambda code; run tests, Terraform fmt/validate.
   plan                   Initialize protected backend and create a saved plan.
   outputs                Display Terraform outputs after an applied deployment.
+  payment-check          Diagnose destination payment/report readiness (read only).
   job-status             Describe a Backup, Copy, or Restore job.
   smoke-test             Test existing frontend and products API outputs.
 
@@ -355,6 +356,11 @@ case "$ACTION" in
   outputs)
     need terraform; require_backend_values; write_configuration; terraform_init
     terraform -chdir="$TF_ROOT" output
+    ;;
+
+  payment-check)
+    require_backend_values; write_configuration; terraform_init
+    pwsh_run "$MIGRATION_ROOT/Test-RegionalPaymentRecovery.ps1" -ConfigPath "$CONFIG_FILE"
     ;;
 
   start-backups)

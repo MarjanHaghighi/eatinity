@@ -86,6 +86,7 @@ Eatinity/
 |
 |-- eatinity-prod/                        # Application Lambda source and legacy stack files
 |   |-- lambda/
+|   |   |-- stripe_requirements.txt       # Pinned payment Lambda dependency
 |   |   |-- admin_audit/
 |   |   |-- admin_menu/
 |   |   |-- admin_orders/
@@ -97,6 +98,8 @@ Eatinity/
 |   |   `-- user_profile/
 |   |-- tests/
 |   |   `-- test_admin_logic.py
+|   |-- scripts/
+|   |   `-- build_lambda_packages.sh      # Reproducible Linux Lambda packaging
 |   |-- main.tf
 |   |-- variables.tf
 |   `-- outputs.tf

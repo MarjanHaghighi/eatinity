@@ -289,6 +289,14 @@ aws secretsmanager put-secret-value \
 Delete the local file securely after validation. Never print or screenshot the
 secret value.
 
+If the secret was created manually during an incident or controlled migration,
+do not run Terraform apply afterward until the existing container is imported
+into the correct regional state. For Canada Central, follow
+`eatinity-iac/IMPORT_GUIDE.md` and import
+`eatinity-prod-cac1/stripe` to
+`module.secrets.aws_secretsmanager_secret.stripe`. The secret value remains
+outside Terraform state.
+
 Run the read-only regional payment diagnostic:
 
 ```bash

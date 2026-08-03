@@ -1,4 +1,5 @@
 import importlib.util
+import json
 import os
 import sys
 import types
@@ -51,6 +52,16 @@ class FakeS3:
         return {"url": "https://example.com/upload", "fields": {"key": kwargs["Key"]}}
 
 
+class FakeSecretsManager:
+    def get_secret_value(self, **kwargs):
+        if kwargs["SecretId"] != "arn:aws:secretsmanager:ca-central-1:123456789012:secret:eatinity-test":
+            raise AssertionError("Unexpected secret identifier")
+        return {"SecretString": json.dumps({
+            "stripe_secret_key": "sk_test_example",
+            "stripe_webhook_secret": "whsec_example",
+        })}
+
+
 def load_module(name, relative_path, cognito=None):
     fake_dynamo = FakeDynamo()
     fake_cognito = cognito or FakeCognito()
@@ -58,7 +69,7 @@ def load_module(name, relative_path, cognito=None):
     path = ROOT / relative_path
 
     with patch("boto3.resource", return_value=fake_dynamo), patch(
-        "boto3.client", side_effect=lambda service, **kwargs: fake_cognito if service == "cognito-idp" else FakeS3() if service == "s3" else object()
+        "boto3.client", side_effect=lambda service, **kwargs: fake_cognito if service == "cognito-idp" else FakeS3() if service == "s3" else FakeSecretsManager() if service == "secretsmanager" else object()
     ), patch.dict(sys.modules, {"stripe": fake_stripe}):
         spec = importlib.util.spec_from_file_location(name, path)
         module = importlib.util.module_from_spec(spec)
@@ -70,13 +81,19 @@ class CheckoutSecurityTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         os.environ.update({
-            "STRIPE_SECRET_KEY": "test",
+            "STRIPE_SECRET_ARN": "arn:aws:secretsmanager:ca-central-1:123456789012:secret:eatinity-test",
             "ORDERS_TABLE_NAME": "orders",
             "PRODUCTS_TABLE_NAME": "products",
         })
         cls.module, cls.dynamo = load_module(
             "checkout_test", "lambda/stripe_checkout/create_checkout_session.py"
         )
+
+    def test_stripe_key_is_loaded_from_secrets_manager(self):
+        self.module._stripe_secret = None
+        with patch("boto3.client", return_value=FakeSecretsManager()):
+            self.module.configure_stripe()
+        self.assertEqual(self.module.stripe.api_key, "sk_test_example")
 
     def test_browser_price_and_name_are_ignored(self):
         self.dynamo.products = [{
@@ -266,6 +283,12 @@ class IntegrationContractTests(unittest.TestCase):
         webhook_end = terraform.index('resource "aws_lambda_function" "user_profile"')
         self.assertIn("STRIPE_SECRET_ARN", terraform[webhook_start:webhook_end])
         self.assertNotIn("STRIPE_SECRET_KEY", terraform[webhook_start:webhook_end])
+        self.assertNotIn("STRIPE_WEBHOOK_SECRET", terraform[webhook_start:webhook_end])
+
+        checkout_start = terraform.index('resource "aws_lambda_function" "create_checkout_session"')
+        checkout_end = terraform.index('resource "aws_lambda_function" "stripe_webhook"')
+        self.assertIn("STRIPE_SECRET_ARN", terraform[checkout_start:checkout_end])
+        self.assertNotIn("STRIPE_SECRET_KEY", terraform[checkout_start:checkout_end])
 
 
 if __name__ == "__main__":

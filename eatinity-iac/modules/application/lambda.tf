@@ -140,6 +140,8 @@ resource "aws_lambda_function" "create_checkout_session" {
 
   environment {
     variables = {
+      # Only the secret identifier is configuration. Stripe values are fetched
+      # at runtime and never enter Lambda environment variables or TF state.
       ORDERS_TABLE_NAME   = var.table_names.orders
       PRODUCTS_TABLE_NAME = var.table_names.products
       STRIPE_SECRET_ARN   = var.stripe_secret_arn
@@ -165,6 +167,7 @@ resource "aws_lambda_function" "stripe_webhook" {
 
   environment {
     variables = {
+      # The endpoint-specific signing secret remains inside Secrets Manager.
       ORDERS_TABLE_NAME = var.table_names.orders
       STRIPE_SECRET_ARN = var.stripe_secret_arn
       SES_FROM_EMAIL    = var.ses_from_email

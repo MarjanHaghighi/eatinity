@@ -33,6 +33,7 @@ crash.*.log
 # Deployment packages and local evidence
 *.zip
 **/stripe_package/
+**/.lambda-build/
 eatinity-iac/migration/job-records/
 *.out.json
 smoke-*.json

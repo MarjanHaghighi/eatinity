@@ -262,17 +262,9 @@ EOF
 }
 
 package_lambdas() {
+  need python
   need zip
-  local mappings=(
-    "products:get_products" "admin_menu:admin_menu" "admin_orders:admin_orders"
-    "admin_users:admin_users" "sales_reports:sales_reports" "admin_audit:admin_audit"
-    "stripe_checkout:stripe_checkout" "stripe_webhook:stripe_webhook" "user_profile:user_profile"
-  )
-  for entry in "${mappings[@]}"; do
-    local folder="${entry%%:*}" archive="${entry##*:}"
-    [[ -d "$LAMBDA_ROOT/$folder" ]] || die "Missing Lambda folder: $folder"
-    (cd "$LAMBDA_ROOT/$folder" && zip -qr "$LAMBDA_ROOT/$archive.zip" . -x '*__pycache__*' '*.pyc')
-  done
+  "$ROOT_DIR/eatinity-prod/scripts/build_lambda_packages.sh"
 }
 
 terraform_init() {

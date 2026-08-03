@@ -1,13 +1,46 @@
 # Eatinity Terraform Import Guide
 
-> **Legacy reference:** the active production-style test environment now uses module
-> addresses under `modules/` and must not import production resources. Update
-> this guide with `module.<name>...` production addresses only when the future
-> production environment is created.
+The active region-selectable root is `environments/production`. Imports must be
+performed only after initializing the exact backend for the intended Region and
+confirming both `aws_region` and `resource_prefix`. Never import a Canada
+resource into the US East state or the reverse.
 
 This Terraform folder is completed for presentation and documentation. It was written safely without running `terraform apply`.
 
 Because many AWS resources already exist, do **not** apply this directly until you import existing resources or review a plan carefully.
+
+## Adopt the manually created Canada Stripe secret
+
+The proven Canada migration created `eatinity-prod-cac1/stripe` manually so the
+working payment Lambdas could be moved away from direct secret environment
+variables without running Terraform apply. Before any future Canada plan/apply,
+initialize the existing Canada backend and import the secret container:
+
+```powershell
+terraform -chdir=eatinity-iac/environments/production init -reconfigure `
+  -backend-config="bucket=<CANADA_STATE_BUCKET>" `
+  -backend-config="key=<CANADA_STATE_KEY>" `
+  -backend-config="region=<STATE_BUCKET_REGION>" `
+  -backend-config="encrypt=true"
+
+terraform -chdir=eatinity-iac/environments/production output -raw aws_region
+terraform -chdir=eatinity-iac/environments/production output -raw resource_prefix
+```
+
+Continue only when the outputs are exactly `ca-central-1` and
+`eatinity-prod-cac1`. Back up the state, then import by secret name:
+
+```powershell
+terraform -chdir=eatinity-iac/environments/production import `
+  module.secrets.aws_secretsmanager_secret.stripe `
+  eatinity-prod-cac1/stripe
+```
+
+The import adopts only the secret metadata/container. Terraform must never be
+given `stripe_secret_key`, `stripe_webhook_secret`, or a secret version resource;
+therefore the encrypted value remains outside state. After import, run
+`terraform plan` and require a no-replacement result for the secret. Do not
+apply until the entire regional plan is reviewed.
 
 Recommended safe workflow after presentation:
 

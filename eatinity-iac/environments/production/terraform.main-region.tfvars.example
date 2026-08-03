@@ -26,10 +26,5 @@ sns_email_subscriptions = []
 ses_sandbox_recipient_emails = []
 ses_from_email = "orders@eatinity.ca"
 
-# Supply real secrets only through an uncommitted terraform.tfvars or an
-# approved secret workflow.
-stripe_secret_key     = "REPLACE_WITH_STRIPE_SECRET_KEY"
-stripe_webhook_secret = "REPLACE_WITH_STRIPE_WEBHOOK_SECRET"
-
-frontend_success_url = "https://eatinity.ca/success?order_id={CHECKOUT_SESSION_ID}"
-frontend_cancel_url  = "https://eatinity.ca/cancel"
+# Terraform creates or adopts only the Secrets Manager container. Add the
+# region-specific Stripe values outside Terraform so they never enter state.

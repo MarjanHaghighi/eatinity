@@ -224,6 +224,16 @@ Manager access from the general application role. This is recorded as a
 hardening improvement and does not mean that secret values are stored in source
 code, GitHub, Terraform state, or Lambda environment variables.
 
+The Canada Central recovery environment was used as the controlled migration
+pilot. A regional secret named `eatinity-prod-cac1/stripe` was created with the
+test API key and the Canada endpoint-specific webhook signing secret. Both
+payment Lambdas were changed to retain only `STRIPE_SECRET_ARN`; the direct
+`STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` variables were removed after two
+successful checkout/webhook/report tests. Because the container was created
+manually to avoid an unreviewed Terraform apply, the documented next state
+operation is a metadata-only Terraform import before any future Canada plan.
+The import never reads or stores the encrypted secret value.
+
 ### 4.6 Configure GitHub OIDC and Environment
 
 Apply `eatinity-iac/bootstrap/github-oidc` separately with the exact repository

@@ -94,6 +94,13 @@ aws secretsmanager put-secret-value `
 The payment Lambdas receive only the secret ARN and retrieve the value using
 `secretsmanager:GetSecretValue` on that exact secret.
 
+If a regional secret was created manually during a controlled migration, import
+the container before any later Terraform plan/apply. For the Canada recovery
+environment, the address is
+`module.secrets.aws_secretsmanager_secret.stripe` and the import ID is
+`eatinity-prod-cac1/stripe`. See `eatinity-iac/IMPORT_GUIDE.md`. Importing the
+container does not import or expose its encrypted value.
+
 ## Disaster recovery
 
 The recovery design uses Terraform to recreate services in `ca-central-1` and
@@ -107,4 +114,3 @@ separate recovery runbooks because they are not restored like DynamoDB/S3.
 The root `.gitignore` excludes credentials, Terraform variables/state/plans,
 dependency folders, build output, Lambda ZIPs, and local evidence. Before every
 push, review `git status` and confirm no secret values are staged.
-

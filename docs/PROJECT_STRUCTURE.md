@@ -84,7 +84,7 @@ Eatinity/
 |   |-- IMPORT_GUIDE.md
 |   `-- README.md
 |
-|-- eatinity-prod/                        # Application Lambda source and legacy stack files
+|-- eatinity-backend/                     # Application Lambda source and legacy stack files
 |   |-- lambda/
 |   |   |-- stripe_requirements.txt       # Pinned payment Lambda dependency
 |   |   |-- admin_audit/
@@ -116,7 +116,7 @@ Eatinity/
 - `.github/workflows` contains the CI/CD, security scanning, SonarQube, and AWS
   OIDC verification workflows.
 - `eatinity-frontend` contains the customer and administrator web application.
-- `eatinity-prod/lambda` contains the Python Lambda handlers used by the APIs.
+- `eatinity-backend/lambda` contains the Python Lambda handlers used by the APIs.
 - `eatinity-iac` contains the reusable Terraform modules, production environment,
   OIDC bootstrap configuration, and disaster-recovery job scripts.
 - `docs` contains architecture diagrams, evidence, the final report, operational

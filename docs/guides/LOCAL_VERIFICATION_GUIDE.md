@@ -5,7 +5,7 @@ These commands are read-only with respect to AWS. Run them from PowerShell in `C
 ## Backend tests
 
 ```powershell
-Set-Location C:\Marjan\Eatinity\eatinity-prod
+Set-Location C:\Marjan\Eatinity\eatinity-backend
 python -m unittest discover -s tests -v
 ```
 

@@ -9,7 +9,7 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TF_ROOT="$ROOT_DIR/eatinity-iac/environments/production"
 MIGRATION_ROOT="$ROOT_DIR/eatinity-iac/migration"
 FRONTEND_ROOT="$ROOT_DIR/eatinity-frontend"
-LAMBDA_ROOT="$ROOT_DIR/eatinity-prod/lambda"
+LAMBDA_ROOT="$ROOT_DIR/eatinity-backend/lambda"
 RUNTIME_ROOT="$ROOT_DIR/.eatinity-recovery"
 
 ACTION="${1:-help}"
@@ -264,7 +264,7 @@ EOF
 package_lambdas() {
   need python
   need zip
-  "$ROOT_DIR/eatinity-prod/scripts/build_lambda_packages.sh"
+  "$ROOT_DIR/eatinity-backend/scripts/build_lambda_packages.sh"
 }
 
 terraform_init() {
@@ -305,7 +305,7 @@ case "$ACTION" in
     write_configuration
     package_lambdas
     (cd "$FRONTEND_ROOT" && npm ci && npm run lint && npm run build)
-    (cd "$ROOT_DIR/eatinity-prod" && python -m unittest discover -s tests -v)
+    (cd "$ROOT_DIR/eatinity-backend" && python -m unittest discover -s tests -v)
     terraform fmt -check -recursive "$ROOT_DIR/eatinity-iac"
     terraform -chdir="$TF_ROOT" init -backend=false
     terraform -chdir="$TF_ROOT" validate

@@ -5,8 +5,8 @@ resource "aws_lambda_function" "get_products" {
   runtime       = "python3.12"
   tags          = var.tags
 
-  filename         = "${path.module}/../../../eatinity-prod/lambda/get_products.zip"
-  source_code_hash = filebase64sha256("${path.module}/../../../eatinity-prod/lambda/get_products.zip")
+  filename         = "${path.module}/../../../eatinity-backend/lambda/get_products.zip"
+  source_code_hash = filebase64sha256("${path.module}/../../../eatinity-backend/lambda/get_products.zip")
 
   environment {
     variables = {
@@ -24,8 +24,8 @@ resource "aws_lambda_function" "admin_menu" {
   runtime       = "python3.12"
   tags          = var.tags
 
-  filename         = "${path.module}/../../../eatinity-prod/lambda/admin_menu.zip"
-  source_code_hash = filebase64sha256("${path.module}/../../../eatinity-prod/lambda/admin_menu.zip")
+  filename         = "${path.module}/../../../eatinity-backend/lambda/admin_menu.zip"
+  source_code_hash = filebase64sha256("${path.module}/../../../eatinity-backend/lambda/admin_menu.zip")
 
   timeout     = 30
   memory_size = 256
@@ -47,8 +47,8 @@ resource "aws_lambda_function" "admin_orders" {
   runtime       = "python3.12"
   tags          = var.tags
 
-  filename         = "${path.module}/../../../eatinity-prod/lambda/admin_orders.zip"
-  source_code_hash = filebase64sha256("${path.module}/../../../eatinity-prod/lambda/admin_orders.zip")
+  filename         = "${path.module}/../../../eatinity-backend/lambda/admin_orders.zip"
+  source_code_hash = filebase64sha256("${path.module}/../../../eatinity-backend/lambda/admin_orders.zip")
 
   timeout     = 30
   memory_size = 256
@@ -69,8 +69,8 @@ resource "aws_lambda_function" "admin_users" {
   runtime       = "python3.12"
   tags          = var.tags
 
-  filename         = "${path.module}/../../../eatinity-prod/lambda/admin_users.zip"
-  source_code_hash = filebase64sha256("${path.module}/../../../eatinity-prod/lambda/admin_users.zip")
+  filename         = "${path.module}/../../../eatinity-backend/lambda/admin_users.zip"
+  source_code_hash = filebase64sha256("${path.module}/../../../eatinity-backend/lambda/admin_users.zip")
 
   timeout     = 30
   memory_size = 256
@@ -91,8 +91,8 @@ resource "aws_lambda_function" "sales_reports" {
   runtime       = "python3.12"
   tags          = var.tags
 
-  filename         = "${path.module}/../../../eatinity-prod/lambda/sales_reports.zip"
-  source_code_hash = filebase64sha256("${path.module}/../../../eatinity-prod/lambda/sales_reports.zip")
+  filename         = "${path.module}/../../../eatinity-backend/lambda/sales_reports.zip"
+  source_code_hash = filebase64sha256("${path.module}/../../../eatinity-backend/lambda/sales_reports.zip")
 
   timeout     = 30
   memory_size = 256
@@ -112,8 +112,8 @@ resource "aws_lambda_function" "admin_audit" {
   runtime       = "python3.12"
   tags          = var.tags
 
-  filename         = "${path.module}/../../../eatinity-prod/lambda/admin_audit.zip"
-  source_code_hash = filebase64sha256("${path.module}/../../../eatinity-prod/lambda/admin_audit.zip")
+  filename         = "${path.module}/../../../eatinity-backend/lambda/admin_audit.zip"
+  source_code_hash = filebase64sha256("${path.module}/../../../eatinity-backend/lambda/admin_audit.zip")
 
   timeout     = 30
   memory_size = 128
@@ -132,8 +132,8 @@ resource "aws_lambda_function" "create_checkout_session" {
   runtime       = "python3.12"
   tags          = var.tags
 
-  filename         = "${path.module}/../../../eatinity-prod/lambda/stripe_checkout.zip"
-  source_code_hash = filebase64sha256("${path.module}/../../../eatinity-prod/lambda/stripe_checkout.zip")
+  filename         = "${path.module}/../../../eatinity-backend/lambda/stripe_checkout.zip"
+  source_code_hash = filebase64sha256("${path.module}/../../../eatinity-backend/lambda/stripe_checkout.zip")
 
   timeout     = 30
   memory_size = 256
@@ -159,8 +159,8 @@ resource "aws_lambda_function" "stripe_webhook" {
   runtime       = "python3.12"
   tags          = var.tags
 
-  filename         = "${path.module}/../../../eatinity-prod/lambda/stripe_webhook.zip"
-  source_code_hash = filebase64sha256("${path.module}/../../../eatinity-prod/lambda/stripe_webhook.zip")
+  filename         = "${path.module}/../../../eatinity-backend/lambda/stripe_webhook.zip"
+  source_code_hash = filebase64sha256("${path.module}/../../../eatinity-backend/lambda/stripe_webhook.zip")
 
   timeout     = 30
   memory_size = 256
@@ -184,8 +184,8 @@ resource "aws_lambda_function" "user_profile" {
   runtime       = "python3.12"
   tags          = var.tags
 
-  filename         = "${path.module}/../../../eatinity-prod/lambda/user_profile.zip"
-  source_code_hash = filebase64sha256("${path.module}/../../../eatinity-prod/lambda/user_profile.zip")
+  filename         = "${path.module}/../../../eatinity-backend/lambda/user_profile.zip"
+  source_code_hash = filebase64sha256("${path.module}/../../../eatinity-backend/lambda/user_profile.zip")
 
   timeout     = 30
   memory_size = 128

@@ -63,7 +63,7 @@ terraform import aws_s3_bucket.images eatinity-prod-s3-images
 API Gateway route/integration imports need API IDs and route IDs from AWS Console. CloudFront import needs the distribution ID.
 
 The consolidated IaC now also declares resources that AWS may already have
-created automatically or that were managed by the older `eatinity-prod`
+created automatically or that were managed by the older `eatinity-backend`
 Terraform configuration. Import these before any future apply when they exist:
 
 - S3 bucket policies, versioning, encryption, CORS, and public-access blocks.

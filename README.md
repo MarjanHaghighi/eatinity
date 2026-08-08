@@ -11,7 +11,7 @@ menu, orders, users, reports, and audit records.
   application checks, Trivy, SonarQube Community Edition, AWS OIDC deployment,
   and post-deployment smoke tests.
 - `eatinity-frontend/` - React/Vite customer and administrator interface.
-- `eatinity-prod/` - Python Lambda handlers, deployment packages, legacy
+- `eatinity-backend/` - Python Lambda handlers, deployment packages, legacy
   production Terraform, and backend unit tests.
 - `eatinity-iac/` - modular Terraform for identity, storage, databases,
   application services, delivery, operations, secrets, and disaster recovery.
@@ -48,7 +48,7 @@ npm run build
 Backend:
 
 ```powershell
-cd eatinity-prod
+cd eatinity-backend
 python -m unittest discover -s tests -v
 ```
 

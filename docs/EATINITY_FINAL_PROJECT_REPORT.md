@@ -187,7 +187,7 @@ The production files are generated in `eatinity-frontend/dist`.
 ### 4.3 Validate the backend
 
 ```text
-cd eatinity-prod
+cd eatinity-backend
 python -m unittest discover -s tests -v
 ```
 
